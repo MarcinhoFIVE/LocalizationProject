@@ -9,11 +9,17 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import br.mdan.localizationproject.databinding.ActivityMapsBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.Marker
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(),
+    OnMapReadyCallback,
+GoogleMap.OnMarkerClickListener {
 
-    private lateinit var mMap: GoogleMap
+    private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +31,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     /**
@@ -37,11 +45,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        map = googleMap
 
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        map.getUiSettings().setZoomControlsEnabled(true)
+        map.setOnMarkerClickListener(this)
     }
+
+    override fun onMarkerClick(p0: Marker) = false
 }
