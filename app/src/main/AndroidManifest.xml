@@ -29,15 +29,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
-
         <!--incorpora a versão do Google Play Services com que o app foi compilado-->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
 
-        <!--usando a com.google.android.gms:play-services-maps:16.0.0 ou versões anteriores e
-        seu app segmentar o nível da API 28 (Android 9.0) ou mais recente-->
+    <!--usando a com.google.android.gms:play-services-maps:16.0.0 ou versões anteriores e
+    seu app segmentar o nível da API 28 (Android 9.0) ou mais recente-->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
