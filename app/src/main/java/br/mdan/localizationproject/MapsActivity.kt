@@ -93,13 +93,19 @@ class MapsActivity : AppCompatActivity(),
         map.isMyLocationEnabled = true
 
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            if (location != null) {
+            //if (location != null) {
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                map.addMarker(MarkerOptions().title("My Location"))
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,12f))
-            }
+                //map.addMarker(MarkerOptions().position(currentLatLng).title("My Location"))
+                placeMarkerOnMap(currentLatLng)
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,12.0f))
+            //}
         }
+    }
+
+    private fun placeMarkerOnMap(location: LatLng) {
+        val markerOptions = MarkerOptions().position(location).title("My Location")
+        map.addMarker(markerOptions)
     }
 
     override fun onMarkerClick(p0: Marker) = false
